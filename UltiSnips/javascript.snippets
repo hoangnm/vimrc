@@ -1,0 +1,51 @@
+snippet cl "console.log(...)" b
+console.log($0);
+endsnippet
+
+snippet rcc "React Class Component" b
+import React, { Component} from 'react';
+import PropTypes from 'prop-types';
+import styles from './styles.css';
+
+class ${1:`!v expand('%:t:r')`} extends Component {
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return (
+			<div className={styles.base}>
+				$3
+			</div>
+		);
+	}
+}
+
+export default $1;
+endsnippet
+
+snippet rfc "React Functional Component" b
+import React from 'react';
+import PropTypes from 'prop-types';
+import styles from './styles.css';
+
+function ${1:`!v expand('%:t:r')`}(${3:{...props}}) {
+	return (
+		<div className={styles.base}>
+			$4
+		</div>
+	);
+}
+
+$1.defaultProps = {};
+
+$1.propTypes = {};
+
+export default $1;
+endsnippet
+
+snippet dp "Default Props" b
+${1:`!v expand('%:t:r')`.}defaultProps = {
+	$2
+};
+endsnippet
