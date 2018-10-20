@@ -51,6 +51,9 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
+let vim_markdown_preview_github=1
+let vim_markdown_preview_hotkey='<c-m>'
+
 " NERDTree
 let NERDTreeShowHidden=1
 let NERDTreeIgnore = ['\.git']
@@ -116,6 +119,8 @@ Plug 'ap/vim-css-color'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'airblade/vim-rooter'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'mattn/emmet-vim'
 call plug#end()
 
 
