@@ -86,9 +86,7 @@ noremap <silent> <F4> :set hlsearch! hlsearch?<CR>
 nnoremap <leader>ji :call JSXEachAttributeInLine()<CR>
 
 " ale
-let g:ale_fixers = {
-\   'javascript': ['eslint', 'prettier'],
-\}
+let g:ale_fixers = ['prettier', 'eslint']
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma'
 let g:ale_fix_on_save = 1
 let g:startify_session_dir = '~/.vim/session'
