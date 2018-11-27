@@ -61,10 +61,10 @@ let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let g:NERDTreeWinPos = "right"
-nmap <silent> <leader>nt :NERDTreeToggle<cr>
-nmap <silent> <leader>nf :NERDTreeFocus<cr>
-nmap <leader>nb :NERDTreeFromBookmark<Space>
-nmap ,cl :let @*=expand("%:p")<CR>
+nnoremap <silent> <leader>nt :NERDTreeToggle<cr>
+nnoremap <silent> <leader>nf :NERDTreeFocus<cr>
+nnoremap <leader>nb :NERDTreeFromBookmark<Space>
+nnoremap <leader>cl :let @*=expand("%:p")<CR>
 " nmap <leader>ns :NERDTreeFind<Space>
 nnoremap <silent> <leader>v :NERDTreeFind<CR>
 
@@ -73,22 +73,28 @@ let g:UltiSnipsJumpForwardTrigger      = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger     = '<s-tab>'
 
 " shortcut mapping
-map <C-L> <C-W>l<C-W>_
-map <C-J> <C-W>j<C-W>_
-map <C-H> <C-W>h<C-W>_
-map <C-K> <C-W>k<C-W>_
-map <silent> <C-c> :close<cr>
-nmap <S-Enter> O<Esc>
-nmap <CR> o<Esc>
+nnoremap <C-L> <C-W>l<C-W>_
+nnoremap <C-J> <C-W>j<C-W>_
+nnoremap <C-H> <C-W>h<C-W>_
+nnoremap <C-K> <C-W>k<C-W>_
+nnoremap <silent> <C-c> :close<cr>
+nnoremap <S-Enter> O<Esc>
+nnoremap <CR> o<Esc>
 inoremap jk <Esc>
 noremap <silent> <F4> :set hlsearch! hlsearch?<CR>
-
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ji :call JSXEachAttributeInLine()<CR>
 
+iabbrev c const
+iabbrev l let
+
 " ale
-let g:ale_fixers = {
-\   'javascript': ['eslint', 'prettier'],
-\}
+let g:ale_fixers = ['prettier', 'eslint']
+" let b:ale_fixers = {
+" \ 'javascript': ['prettier', 'eslint'],
+" \
+" \}
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma'
 let g:ale_fix_on_save = 1
 let g:startify_session_dir = '~/.vim/session'
