@@ -91,14 +91,9 @@ iabbrev l let
 
 " ale
 let g:ale_fixers = ['prettier', 'eslint']
-" let b:ale_fixers = {
-" \ 'javascript': ['prettier', 'eslint'],
-" \
-" \}
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma'
 let g:ale_fix_on_save = 1
-let g:startify_session_dir = '~/.vim/session'
 
+let g:startify_session_dir = '~/.vim/session'
 let g:ackprg = 'ag --vimgrep'
 
 " Plug
@@ -111,7 +106,6 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rvm'
 Plug 'tpope/vim-repeat'
 Plug 'airblade/vim-gitgutter'
