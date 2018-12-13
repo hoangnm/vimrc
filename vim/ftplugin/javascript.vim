@@ -8,4 +8,3 @@ let b:ale_linters = {
 \
 \}
 let b:ale_javascript_prettier_options = '--single-quote --trailing-comma'
-let b:javascript_plugin_flow = 1
