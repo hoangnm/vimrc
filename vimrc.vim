@@ -86,14 +86,12 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ji :call JSXEachAttributeInLine()<CR>
 
-iabbrev c const
-iabbrev l let
-
 " ale
 let g:ale_fixers = ['prettier', 'eslint']
 let g:ale_fix_on_save = 1
 
 let g:javascript_plugin_flow = 1
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma'
 
 let g:startify_session_dir = '~/.vim/session'
 let g:ackprg = 'ag --vimgrep'
@@ -113,8 +111,6 @@ Plug 'tpope/vim-repeat'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'mhinz/vim-startify'
-Plug 'mustache/vim-mustache-handlebars'
 Plug 'mileszs/ack.vim'
 Plug 'SirVer/ultisnips'
 Plug 'ap/vim-css-color'
@@ -124,7 +120,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'mattn/emmet-vim'
 call plug#end()
-
 
 " put each JSX tag's attributes on its on line
 function! JSXEachAttributeInLine()
