@@ -1,0 +1,30 @@
+extends javascript
+
+snippet hc "Hapi Controller" b
+const ${1:api} = {
+  method: ${2:''}
+  path: ${3:''},
+  options: {
+    description: ${4:''},
+    notes: ${5:''},
+    tags: ${6:[]},
+    handler: async (
+      hapiRequest: ${7:''},
+      hapiResponse: hapi.ResponseToolkit
+    ) => {
+    },
+    plugins: {
+      'hapi-swagger': {
+        responses: {
+          [${8:''}]: {
+            description: ${9:''}
+          },
+        }
+      }
+    }
+  }
+};
+endsnippet
+
+
+
