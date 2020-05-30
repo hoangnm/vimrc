@@ -50,9 +50,9 @@ let g:camelcasemotion_key = '<leader>'
 " ignore for t-command plugin
 " set wildignore+=*/node_modules/**
 " let g:CommandTWildIgnore=&wildignore . ",*/node_modules"
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
+" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+" let g:ctrlp_map = '<c-p>'
+" let g:ctrlp_cmd = 'CtrlP'
 
 let vim_markdown_preview_github=1
 let vim_markdown_preview_hotkey='<c-m>'
@@ -63,25 +63,13 @@ let NERDTreeIgnore = ['\.git']
 let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
-let g:NERDTreeWinPos = "right"
+let g:NERDTreeWinPos = "left"
 nnoremap <silent> <leader>nt :NERDTreeToggle<cr>
 nnoremap <silent> <leader>nf :NERDTreeFocus<cr>
 nnoremap <leader>nb :NERDTreeFromBookmark<Space>
 " nnoremap <leader>cl :let @*=expand("%:p")<CR>
 " nmap <leader>ns :NERDTreeFind<Space>
 nnoremap <silent> <leader>v :NERDTreeFind<CR>
-
-
-" === Denite shorcuts === "
-"   ;         - Browser currently open buffers
-"   <leader>t - Browse list of files in current directory
-"   <leader>g - Search current directory for occurences of given term and
-"   close window if no results
-"   <leader>j - Search current directory for occurences of word under cursor
-" nmap ; :Denite buffer -split=floating -winrow=1<CR>
-" nmap <leader>t :Denite file/rec -split=floating -winrow=1<CR>
-" nnoremap <leader>g :<C-u>Denite grep:. -no-empty<CR>
-" nnoremap <leader>j :<C-u>DeniteCursorWord grep:.<CR>
 
 let g:UltiSnipsExpandTrigger           = '<c-j>'
 let g:UltiSnipsJumpForwardTrigger      = '<c-j>'
@@ -162,11 +150,6 @@ nnoremap <leader>ji :call JSXEachAttributeInLine()<CR>
 map <Leader>vp :VimuxPromptCommand<CR>
 map <Leader>vz :VimuxZoomRunner<CR>
 
-" ale
-" let g:ale_fixers = ['prettier', 'eslint']
-" let g:ale_linters_ignore = {'typescript': ['tslint']}
-" let g:ale_fix_on_save = 1
-
 let g:ackprg = 'ag --vimgrep'
 
 set hidden
@@ -218,7 +201,7 @@ Plug 'SirVer/ultisnips'
 Plug 'ap/vim-css-color'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'airblade/vim-rooter'
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'mattn/emmet-vim'
 Plug 'leafgarland/typescript-vim'
@@ -229,10 +212,11 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'bkad/CamelCaseMotion'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'ap/vim-buftabline'
+" Plug 'ap/vim-buftabline'
 Plug 'easymotion/vim-easymotion'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'Shougo/denite.nvim'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
 augroup SyntaxSettings
@@ -261,46 +245,44 @@ function! JSXEachAttributeInLine()
   let @q = previous_q_reg
 endfunction
 
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
+endfunction
 
-" Jump to anywhere you want with minimal keystrokes, with just one key binding.
-" `s{char}{label}`
-" nmap s <Plug>(easymotion-overwin-f)
-" or
-" `s{char}{char}{label}`
-" Need one more keystroke, but on average, it may be more comfortable.
-nmap s <Plug>(easymotion-overwin-f2)
+" Remove date from buffer list
+call denite#custom#var('buffer', 'date_format', '')
+call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+call denite#custom#option('default', 'prompt', 'λ')
+call denite#custom#var('grep', 'command', ['ag'])
+call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', [])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
+call denite#custom#source('file_rec', 'sorters', ['sorter_sublime'])
+call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+      \ [ '.git/', '.ropeproject/', '__pycache__/*', '*.pyc', 'node_modules/',
+      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/', '*.png'])
 
-" Turn on case-insensitive feature
-let g:EasyMotion_smartcase = 1
-
-" JK motions: Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
 
 " Define mappings for Denite
-
-" call denite#custom#var('buffer', 'date_format', '')
-" call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob'])
- " Use ripgrep in place of grep
-" call denite#custom#var('grep', 'command', ['rg'])
-" " Define mappings
-" autocmd FileType denite call s:denite_my_settings()
-" function! s:denite_my_settings() abort
-"   nnoremap <silent><buffer><expr> <CR>
-"   \ denite#do_map('do_action')
-"   nnoremap <silent><buffer><expr> d
-"   \ denite#do_map('do_action', 'delete')
-"   nnoremap <silent><buffer><expr> p
-"   \ denite#do_map('do_action', 'preview')
-"   nnoremap <silent><buffer><expr> q
-"   \ denite#do_map('quit')
-"   nnoremap <silent><buffer><expr> i
-"   \ denite#do_map('open_filter_buffer')
-"   nnoremap <silent><buffer><expr> <Space>
-"   \ denite#do_map('toggle_select').'j'
-" endfunction
-" " Open file commands
-" call denite#custom#map('insert,normal', "<C-t>", '<denite:do_action:tabopen>')
-" call denite#custom#map('insert,normal', "<C-v>", '<denite:do_action:vsplit>')
-" call denite#custom#map('insert,normal', "<C-h>", '<denite:do_action:split>')
+nmap ; :Denite buffer -split=floating -winrow=1<CR>
+nmap <leader>p :DeniteProjectDir file/rec -split=floating -winrow=1<CR>
+" nmap <leader>t :Denite file/rec -split=floating -winrow=1<CR>
+nnoremap <leader>g :Denite grep<CR>
+" nnoremap <leader>j :<C-u>Denite grep<CR>
+" nmap <LEADER>p :Denite -start-filter file/rec<CR>
+" nmap <LEADER>b :Denite buffer<CR>
+" nnoremap \ :Denite grep<CR>
