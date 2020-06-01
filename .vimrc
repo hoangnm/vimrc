@@ -146,7 +146,6 @@ inoremap jk <Esc>
 noremap <silent> <F4> :set hlsearch! hlsearch?<CR>
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-nnoremap <leader>ji :call JSXEachAttributeInLine()<CR>
 map <Leader>vp :VimuxPromptCommand<CR>
 map <Leader>vz :VimuxZoomRunner<CR>
 
@@ -157,10 +156,6 @@ nnoremap <S-n> :bnext<CR>
 nnoremap <S-p> :bprev<CR>
 
 let g:miniBufExplorerAutoStart = 0
-
-" let g:airline#extensions#bufferline#enabled = 1
-
-" let g:deoplete#enable_at_startup = 1
 
 " Split window
 nmap ss :split<Return><C-w>w
@@ -183,9 +178,7 @@ nmap <C-w><down> <C-w>-
 
 " Plug
 call plug#begin('~/.vim/plugged')
-" Plug 'elmcast/elm-vim'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-" Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
 Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-surround'
@@ -206,44 +199,21 @@ Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'mattn/emmet-vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
-" Plug 'HerringtonDarkholme/yats.vim'
-" Plug 'fholgado/minibufexpl.vim'
-" Plug 'Shougo/deoplete.nvim'
 Plug 'bkad/CamelCaseMotion'
 Plug 'benmills/vimux'
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'ap/vim-buftabline'
+Plug 'ap/vim-buftabline'
 Plug 'easymotion/vim-easymotion'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
+
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 augroup SyntaxSettings
     autocmd!
     autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 augroup END
-
-" put each JSX tag's attributes on its on line
-function! JSXEachAttributeInLine()
-  let l:previous_q_reg = @q
-  let l:line = getline(".")
-  let l:identation_length = len(matchstr(line, "^\[\\t|\\ \]*"))
-
-  if &expandtab
-    let l:padding = repeat(" ", (identation_length + &shiftwidth))
-  else
-    let l:padding = repeat("\t", identation_length + 1)
-  endif
-
-  let @q = substitute(line, "\\w\\+=[{|'|\"]", "\\n" . padding . "&", "g")
-
-  let @q = substitute(getreg("q"), "\ \\n", "\\n", "g")
-
-  execute "normal! 0d$\"qp"
-
-  let @q = previous_q_reg
-endfunction
 
 autocmd FileType denite call s:denite_my_settings()
 function! s:denite_my_settings() abort
