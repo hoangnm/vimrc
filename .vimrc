@@ -136,9 +136,9 @@ command! BufOnly silent! execute "%bd|e#|bd#"
 
 " shortcut mapping
 nnoremap <C-L> <C-W>l<C-W>_
-nnoremap <C-J> <C-W>j<C-W>_
+" nnoremap <C-J> <C-W>j<C-W>_
 nnoremap <C-H> <C-W>h<C-W>_
-nnoremap <C-K> <C-W>k<C-W>_
+" nnoremap <C-K> <C-W>k<C-W>_
 nnoremap <silent> <C-c> :close<cr>
 nnoremap <S-Enter> O<Esc>
 nnoremap <CR> o<Esc>
@@ -154,6 +154,7 @@ let g:ackprg = 'ag --vimgrep'
 set hidden
 nnoremap <S-n> :bnext<CR>
 nnoremap <S-p> :bprev<CR>
+nnoremap <S-c> :bp <bar> :bd #<CR>
 
 let g:miniBufExplorerAutoStart = 0
 
@@ -208,7 +209,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 augroup SyntaxSettings
     autocmd!
@@ -233,7 +234,7 @@ endfunction
 
 " Remove date from buffer list
 call denite#custom#var('buffer', 'date_format', '')
-call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
 call denite#custom#option('default', 'prompt', 'λ')
 call denite#custom#var('grep', 'command', ['ag'])
 call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
@@ -251,7 +252,7 @@ call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
 nmap ; :Denite buffer -split=floating -winrow=1<CR>
 nmap <leader>p :DeniteProjectDir file/rec -split=floating -winrow=1<CR>
 " nmap <leader>t :Denite file/rec -split=floating -winrow=1<CR>
-nnoremap <leader>g :Denite grep<CR>
+" nnoremap <leader>g :Denite grep<CR>
 " nnoremap <leader>j :<C-u>Denite grep<CR>
 " nmap <LEADER>p :Denite -start-filter file/rec<CR>
 " nmap <LEADER>b :Denite buffer<CR>
