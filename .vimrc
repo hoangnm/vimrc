@@ -29,9 +29,7 @@ filetype plugin indent on
 filetype plugin on
 
 let NERDTreeHijackNetrw = 0
-let g:elm_setup_keybindings = 1
 set shell=zsh\ -l
-let g:elm_format_autosave = 1
 " set hlsearch
 set incsearch 
 " vim-gutter
@@ -115,6 +113,7 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
+nmap <silent> gf <Plug>(coc-format)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -130,6 +129,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+command! -nargs=0 Format :call CocAction('format')
 
 command! BufOnly silent! execute "%bd|e#|bd#"
 " ------------------------
@@ -146,8 +146,8 @@ inoremap jk <Esc>
 noremap <silent> <F4> :set hlsearch! hlsearch?<CR>
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-map <Leader>vp :VimuxPromptCommand<CR>
-map <Leader>vz :VimuxZoomRunner<CR>
+map <leader>vp :VimuxPromptCommand<CR>
+map <leader>vz :VimuxZoomRunner<CR>
 
 let g:ackprg = 'ag --vimgrep'
 
@@ -252,7 +252,7 @@ call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
 nmap ; :Denite buffer -split=floating -winrow=1<CR>
 nmap <leader>p :DeniteProjectDir file/rec -split=floating -winrow=1<CR>
 " nmap <leader>t :Denite file/rec -split=floating -winrow=1<CR>
-" nnoremap <leader>g :Denite grep<CR>
+nnoremap <leader>g :Denite grep<CR>
 " nnoremap <leader>j :<C-u>Denite grep<CR>
 " nmap <LEADER>p :Denite -start-filter file/rec<CR>
 " nmap <LEADER>b :Denite buffer<CR>
