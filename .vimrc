@@ -45,13 +45,6 @@ let maplocalleader = ","
 
 let g:camelcasemotion_key = '<leader>'
 
-" ignore for t-command plugin
-" set wildignore+=*/node_modules/**
-" let g:CommandTWildIgnore=&wildignore . ",*/node_modules"
-" let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-" let g:ctrlp_map = '<c-p>'
-" let g:ctrlp_cmd = 'CtrlP'
-
 let vim_markdown_preview_github=1
 let vim_markdown_preview_hotkey='<c-m>'
 
@@ -149,8 +142,6 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 map <leader>vp :VimuxPromptCommand<CR>
 map <leader>vz :VimuxZoomRunner<CR>
 
-let g:ackprg = 'ag --vimgrep'
-
 set hidden
 nnoremap <S-n> :bnext<CR>
 nnoremap <S-p> :bprev<CR>
@@ -190,12 +181,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'mileszs/ack.vim'
 Plug 'SirVer/ultisnips'
 Plug 'ap/vim-css-color'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'airblade/vim-rooter'
-" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'mattn/emmet-vim'
 Plug 'leafgarland/typescript-vim'
@@ -252,7 +241,7 @@ call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
 nmap ; :Denite buffer -split=floating -winrow=1<CR>
 nmap <leader>p :DeniteProjectDir file/rec -split=floating -winrow=1<CR>
 " nmap <leader>t :Denite file/rec -split=floating -winrow=1<CR>
-nnoremap <leader>g :Denite grep<CR>
+nnoremap <leader>g :Denite grep -split=floating -winrow=1<CR>
 " nnoremap <leader>j :<C-u>Denite grep<CR>
 " nmap <LEADER>p :Denite -start-filter file/rec<CR>
 " nmap <LEADER>b :Denite buffer<CR>
