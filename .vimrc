@@ -28,7 +28,6 @@ set diffopt+=vertical
 filetype plugin indent on
 filetype plugin on
 
-let NERDTreeHijackNetrw = 0
 set shell=zsh\ -l
 " set hlsearch
 set incsearch 
@@ -47,20 +46,6 @@ let g:camelcasemotion_key = '<leader>'
 
 let vim_markdown_preview_github=1
 let vim_markdown_preview_hotkey='<c-m>'
-
-" NERDTree
-let NERDTreeShowHidden=1
-let NERDTreeIgnore = ['\.git']
-let NERDTreeAutoDeleteBuffer = 1
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-let g:NERDTreeWinPos = "left"
-nnoremap <silent> <leader>nt :NERDTreeToggle<cr>
-nnoremap <silent> <leader>nf :NERDTreeFocus<cr>
-nnoremap <leader>nb :NERDTreeFromBookmark<Space>
-" nnoremap <leader>cl :let @*=expand("%:p")<CR>
-" nmap <leader>ns :NERDTreeFind<Space>
-nnoremap <silent> <leader>v :NERDTreeFind<CR>
 
 let g:UltiSnipsExpandTrigger           = '<c-j>'
 let g:UltiSnipsJumpForwardTrigger      = '<c-j>'
@@ -168,9 +153,12 @@ nmap <C-w><right> <C-w>>
 nmap <C-w><up> <C-w>+
 nmap <C-w><down> <C-w>-
 
+
+nnoremap - :Explore<CR>
+nnoremap <Leader>f :Explore .<CR>
+
 " Plug
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'morhetz/gruvbox'
 Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-surround'
@@ -181,7 +169,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'ap/vim-css-color'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'airblade/vim-rooter'
@@ -197,8 +185,6 @@ Plug 'easymotion/vim-easymotion'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
-
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 augroup SyntaxSettings
     autocmd!
