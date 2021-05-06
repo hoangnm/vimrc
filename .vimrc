@@ -20,13 +20,12 @@ set backspace=indent,eol,start
 " set wmw=0
 set ignorecase
 set encoding=utf-8
-set foldmethod=indent
+" set foldmethod=indent
 " set foldignore=
-set diffopt+=vertical
+" set diffopt+=vertical
 
 
 filetype plugin indent on
-filetype plugin on
 
 set shell=zsh\ -l
 " set hlsearch
@@ -126,13 +125,13 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 map <leader>vp :VimuxPromptCommand<CR>
 map <leader>vz :VimuxZoomRunner<CR>
+nnoremap <Leader>q :bd<CR>
 
 set hidden
-nnoremap <S-n> :bnext<CR>
-nnoremap <S-p> :bprev<CR>
+nnoremap <leader>n :bnext<CR>
+nnoremap <leader>3 :bprev<CR>
+nnoremap <leader>w :w<CR>
 nnoremap <S-c> :bp <bar> :bd #<CR>
-
-let g:miniBufExplorerAutoStart = 0
 
 " Split window
 nmap ss :split<Return><C-w>w
@@ -153,9 +152,8 @@ nmap <C-w><right> <C-w>>
 nmap <C-w><up> <C-w>+
 nmap <C-w><down> <C-w>-
 
-
-nnoremap - :Explore<CR>
-nnoremap <Leader>f :Explore .<CR>
+let g:session_autoload='no'
+let g:cursorhold_updatetime = 100
 
 " Plug
 call plug#begin('~/.vim/plugged')
@@ -171,7 +169,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc'
-" Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 Plug 'ap/vim-css-color'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'airblade/vim-rooter'
@@ -186,6 +184,8 @@ Plug 'ap/vim-buftabline'
 Plug 'easymotion/vim-easymotion'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'antoinemadec/FixCursorHold.nvim'
+Plug 'lambdalisue/fern.vim'
 call plug#end()
 
 augroup SyntaxSettings
@@ -234,3 +234,67 @@ nnoremap <leader>g :Denite grep -split=floating -winrow=1<CR>
 " nmap <LEADER>p :Denite -start-filter file/rec<CR>
 " nmap <LEADER>b :Denite buffer<CR>
 " nnoremap \ :Denite grep<CR>
+
+function! s:init_fern() abort
+  " Define NERDTree like mappings
+  nmap <buffer> o <Plug>(fern-action-open:edit)
+  nmap <buffer> rm <Plug>(fern-action-trash)
+  nmap <buffer> go <Plug>(fern-action-open:edit)<C-w>p
+  nmap <buffer> t <Plug>(fern-action-open:tabedit)
+  nmap <buffer> T <Plug>(fern-action-open:tabedit)gT
+  nmap <buffer> i <Plug>(fern-action-open:split)
+  nmap <buffer> gi <Plug>(fern-action-open:split)<C-w>p
+  nmap <buffer> s <Plug>(fern-action-open:vsplit)
+  nmap <buffer> gs <Plug>(fern-action-open:vsplit)<C-w>p
+  nmap <buffer> ma <Plug>(fern-action-new-path)
+  nmap <buffer> P gg
+
+  nmap <buffer> C <Plug>(fern-action-enter)
+  nmap <buffer> u <Plug>(fern-action-leave)
+  nmap <buffer> r <Plug>(fern-action-reload)
+  nmap <buffer> R gg<Plug>(fern-action-reload)<C-o>
+  nmap <buffer> cd <Plug>(fern-action-cd)
+  nmap <buffer> CD gg<Plug>(fern-action-cd)<C-o>
+
+  nmap <buffer> I <Plug>(fern-action-hide-toggle)
+
+nmap <buffer><expr>
+      \ <Plug>(fern-my-expand-or-collapse)
+      \ fern#smart#leaf(
+      \   "\<Plug>(fern-action-collapse)",
+      \   "\<Plug>(fern-action-expand)",
+      \   "\<Plug>(fern-action-collapse)",
+      \ )
+nmap <buffer><expr>
+        \ <Plug>(fern-my-expand-or-enter)
+        \ fern#smart#drawer(
+        \   "\<Plug>(fern-open-or-expand)",
+        \   "\<Plug>(fern-open-or-enter)",
+        \ )
+  nmap <buffer><expr>
+        \ <Plug>(fern-my-collapse-or-leave)
+        \ fern#smart#drawer(
+        \   "\<Plug>(fern-action-collapse)",
+        \   "\<Plug>(fern-action-leave)",
+        \ )
+  nmap <buffer><nowait> l <Plug>(fern-my-expand-or-enter)
+  nmap <buffer><nowait> h <Plug>(fern-my-collapse-or-leave)
+
+  nmap <buffer><nowait> l <Plug>(fern-my-expand-or-collapse)
+endfunction
+
+augroup fern-custom
+  autocmd! *
+  autocmd FileType fern call s:init_fern()
+augroup END
+
+nnoremap <silent> <Leader>ee :<C-u>Fern <C-r>=<SID>smart_path()<CR><CR>
+
+" Return a parent directory of the current buffer when the buffer is a file.
+" Otherwise it returns a current working directory.
+function! s:smart_path() abort
+  if !empty(&buftype) || bufname('%') =~# '^[^:]\+://'
+    return fnamemodify('.', ':p')
+  endif
+  return fnamemodify(expand('%'), ':p:h')
+endfunction
