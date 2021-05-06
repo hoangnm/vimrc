@@ -236,7 +236,6 @@ nnoremap <leader>g :Denite grep -split=floating -winrow=1<CR>
 " nnoremap \ :Denite grep<CR>
 
 function! s:init_fern() abort
-  " Define NERDTree like mappings
   nmap <buffer> o <Plug>(fern-action-open:edit)
   nmap <buffer> rm <Plug>(fern-action-trash)
   nmap <buffer> go <Plug>(fern-action-open:edit)<C-w>p
